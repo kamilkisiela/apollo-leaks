@@ -1,0 +1,28 @@
+diff --git a/node_modules/@apollo/client/cache/cache.cjs.js b/node_modules/@apollo/client/cache/cache.cjs.js
+index 068a99f..3113e5e 100644
+--- a/node_modules/@apollo/client/cache/cache.cjs.js
++++ b/node_modules/@apollo/client/cache/cache.cjs.js
+@@ -531,6 +531,7 @@ var StoreReader = (function () {
+         var _this = this;
+         this.config = config;
+         this.executeSelectionSet = optimism.wrap(function (options) { return _this.execSelectionSetImpl(options); }, {
++            max: Math.pow(2, 16),
+             keyArgs: function (options) {
+                 return [
+                     options.selectionSet,
+@@ -548,6 +549,7 @@ var StoreReader = (function () {
+         this.executeSubSelectedArray = optimism.wrap(function (options) {
+             return _this.execSubSelectedArrayImpl(options);
+         }, {
++            max: Math.pow(2, 16),
+             makeCacheKey: function (_a) {
+                 var field = _a.field, array = _a.array, context = _a.context;
+                 if (supportsResultCaching(context.store)) {
+@@ -1556,6 +1558,7 @@ var InMemoryCache = (function (_super) {
+         _this.maybeBroadcastWatch = optimism.wrap(function (c, fromOptimisticTransaction) {
+             return _this.broadcastWatch.call(_this, c, !!fromOptimisticTransaction);
+         }, {
++            max: Math.pow(2, 16),
+             makeCacheKey: function (c) {
+                 var store = c.optimistic ? _this.optimisticData : _this.data;
+                 if (supportsResultCaching(store)) {
